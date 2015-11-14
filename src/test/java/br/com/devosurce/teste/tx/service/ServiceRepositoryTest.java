@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import br.com.devosurce.teste.tx.config.ApplicationConfig;
+import br.com.devosurce.teste.tx.config.DataSourceConfig;
 
 /**
  * @author Guilherme Pacheco
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = DataSourceConfig.class)
 public class ServiceRepositoryTest {
 
   @Autowired

@@ -18,14 +18,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import br.com.devosurce.teste.tx.config.ApplicationConfig;
+import br.com.devosurce.teste.tx.config.WebAppConfig;
 
 /**
  * @author Guilherme Pacheco
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = WebAppConfig.class)
 public abstract class AbstractResourceTest {
 
   private MockMvc mockMvc;
