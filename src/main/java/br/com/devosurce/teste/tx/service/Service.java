@@ -22,7 +22,7 @@ public class Service {
   @JsonProperty
   private String description;
   @JsonIgnore
-  private Optional<ServiceClient> restClient = Optional.empty();
+  private Optional<ServiceClient> serviceClient = Optional.empty();
 
   Service() {
     super();
@@ -48,7 +48,7 @@ public class Service {
   public void setName(String name) {
     Validate.notBlank(name);
     this.name = name;
-    restClient.ifPresent(c -> c.updateName(id, name));
+    serviceClient.ifPresent(c -> c.updateName(id, name));
   }
 
   public String getDescription() {
@@ -88,8 +88,8 @@ public class Service {
     return String.format("Service [id: %s, name: %s, description: %s]", id, name, description);
   }
 
-  public void setRestClient(final ServiceClient restClient) {
-    this.restClient = Optional.of(restClient);
+  public void setRestClient(final ServiceClient serviceClient) {
+    this.serviceClient = Optional.of(serviceClient);
   }
 
 }
