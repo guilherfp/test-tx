@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -13,20 +12,18 @@ import org.springframework.stereotype.Component;
  * @author Guilherme Pacheco
  */
 @Component
-public class ServiceMapper implements RowMapper<Service>, ResultSetExtractor<Service> {
+public class ServiceMapper {
 
   @Autowired
   private ServiceClient serviceRestClient;
   private QService qSerivce = new QService();
 
-  @Override
-  public Service mapRow(ResultSet rs, int rowNum) throws SQLException {
-    return map(rs);
+  public RowMapper<Service> mapper() {
+    return (rs, rowNum) -> map(rs);
   }
 
-  @Override
-  public Service extractData(ResultSet rs) throws SQLException, DataAccessException {
-    return map(rs);
+  public ResultSetExtractor<Service> resultSet() {
+    return (rs) -> map(rs);
   }
 
   private Service map(ResultSet rs) throws SQLException {

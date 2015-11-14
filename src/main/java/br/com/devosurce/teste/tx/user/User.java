@@ -2,19 +2,19 @@ package br.com.devosurce.teste.tx.user;
 
 import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
+import javax.persistence.Entity;
 
-import br.com.devosurce.teste.tx.service.Service;
+import org.apache.commons.lang3.Validate;
 
 /**
  * @author Guilherme Pacheco
  */
+@Entity
 public class User {
 
   private Long id;
   private String name;
   private String username;
-  private Service service;
 
   public User(String username) {
     setUsername(username);
@@ -43,14 +43,6 @@ public class User {
   public void setUsername(String username) {
     Validate.notBlank(username);
     this.username = username;
-  }
-
-  public Service getService() {
-    return service;
-  }
-
-  public void setService(Service service) {
-    this.service = service;
   }
 
   @Override

@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -36,8 +35,8 @@ public class ServiceRepository {
   }
 
   public Optional<Service> findById(Long id) {
-    ResultSetExtractor<Service> rse = serviceMapper;
-    return Optional.ofNullable(jdbcTemplate.query(SELECT_SQL, new Object[] { id }, rse));
+    Object[] args = new Object[] { id };
+    return Optional.ofNullable(jdbcTemplate.query(SELECT_SQL, args, serviceMapper.resultSet()));
   }
 
   public void udpate(Service service) {
@@ -66,7 +65,6 @@ public class ServiceRepository {
   }
 
   public List<Service> findAll() {
-    return jdbcTemplate.query(SELECT_ALL_SQL, serviceMapper);
+    return jdbcTemplate.query(SELECT_ALL_SQL, serviceMapper.mapper());
   }
-
 }
