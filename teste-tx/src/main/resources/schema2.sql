@@ -1,5 +1,0 @@
-CREATE TABLE service (
-  id INTEGER AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  description VARCHAR(100)
-);
