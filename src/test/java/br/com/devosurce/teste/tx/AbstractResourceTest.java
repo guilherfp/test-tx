@@ -6,27 +6,18 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-
-import br.com.devosurce.teste.tx.config.WebAppConfig;
 
 /**
  * @author Guilherme Pacheco
  */
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebAppConfig.class)
-public abstract class AbstractResourceTest {
+public abstract class AbstractResourceTest extends AbstractTest {
 
   private MockMvc mockMvc;
   private HttpMessageConverter<Object> messageConverter;

@@ -16,6 +16,10 @@ public class User {
   private String name;
   private String username;
 
+  User() {
+    super();
+  }
+
   public User(String username) {
     setUsername(username);
   }

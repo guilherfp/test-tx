@@ -1,45 +1,27 @@
 package br.com.devosurce.teste.tx.user;
 
-import java.util.List;
-
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.querydsl.jpa.impl.JPAQuery;
+import br.com.devosurce.teste.tx.shared.CrudHibernateRepository;
 
 /**
  * @author Guilherme Pacheco
  */
+@UserTx
 @Repository
-public class UserRepository {
+public class UserRepository extends CrudHibernateRepository<User, Long> {
 
-  private JPAQuery<User> jpaQuery;
-
-  public UserRepository() {
-    jpaQuery = new JPAQuery<>();
+  @Autowired
+  public UserRepository(SessionFactory sessionFactory) {
+    super(sessionFactory, "User");
   }
 
-  public User findById(long id) {
-    return null;
-  }
-
-  public void save(User user) {
-
-  }
-
-  public void update(User user) {
-
-  }
-
-  public void delete(User user) {
-
-  }
-
-  public List<User> findAll() {
-    return null;
-  }
-
-  public List<User> find() {
-    return null;
+  @UserTx
+  @Override
+  public void delete(User obj) {
+    super.delete(obj);
   }
 
 }

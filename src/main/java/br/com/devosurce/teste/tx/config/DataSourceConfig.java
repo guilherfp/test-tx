@@ -22,36 +22,34 @@ public class DataSourceConfig {
   @UserData
   public DataSource userDataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-    builder.setType(EmbeddedDatabaseType.H2).addScripts("schema1.sql");
-    return builder.build();
+    return builder.setType(EmbeddedDatabaseType.H2).addScripts("schema1.sql").build();
   }
 
   @Bean
   @ServiceData
   public DataSource serviceDataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-    builder.setType(EmbeddedDatabaseType.H2).addScripts("schema2.sql");
-    return builder.build();
+    return builder.setType(EmbeddedDatabaseType.H2).addScripts("schema2.sql").build();
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory(@UserData DataSource dataSource) {
+  public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
     factory.setMappingResources("hibernate/user.hbm.xml");
-    factory.setDataSource(dataSource);
+    factory.setDataSource(userDataSource());
     return factory;
   }
 
   @Bean
   @Qualifier("user")
-  public DataSourceTransactionManager transactionManager1(@UserData DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
+  public DataSourceTransactionManager userTransaction() {
+    return new DataSourceTransactionManager(userDataSource());
   }
 
   @Bean
   @Qualifier("service")
-  public DataSourceTransactionManager transactionManager2(@ServiceData DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
+  public DataSourceTransactionManager serviceTransaction() {
+    return new DataSourceTransactionManager(serviceDataSource());
   }
 
 }

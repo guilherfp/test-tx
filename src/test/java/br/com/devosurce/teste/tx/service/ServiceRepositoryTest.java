@@ -5,21 +5,13 @@ import static org.junit.Assert.*;
 import java.util.Optional;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-import br.com.devosurce.teste.tx.config.WebAppConfig;
+import br.com.devosurce.teste.tx.AbstractTest;
 
 /**
  * @author Guilherme Pacheco
  */
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebAppConfig.class)
-public class ServiceRepositoryTest {
+public class ServiceRepositoryTest extends AbstractTest {
 
   @Autowired
   private ServiceRepository serviceRepository;
