@@ -2,6 +2,8 @@ package br.com.devosurce.teste.tx.service;
 
 import static org.junit.Assert.*;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,16 @@ public class ServiceRepositoryTest {
     serviceRepository.save(service);
     assertNotNull(service.getId());
     assertEquals(service, serviceRepository.findById(service.getId()).get());
+  }
+
+  @Test
+  public void testUdpate() throws Exception {
+    Service service = new Service("Service 01");
+    serviceRepository.save(service);
+    Optional<Service> opService = serviceRepository.findById(service.getId());
+    assertTrue(opService.isPresent());
+    opService.ifPresent(s -> s.setName("Service 99"));
+    serviceRepository.udpate(service);
   }
 
 }

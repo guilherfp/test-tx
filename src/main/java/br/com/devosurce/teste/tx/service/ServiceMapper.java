@@ -3,6 +3,7 @@ package br.com.devosurce.teste.tx.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,11 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceMapper implements RowMapper<Service>, ResultSetExtractor<Service> {
 
-  private QService qSerivce;
-
-  public ServiceMapper() {
-    qSerivce = new QService();
-  }
+  @Autowired
+  private ServiceClient serviceRestClient;
+  private QService qSerivce = new QService();
 
   @Override
   public Service mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -39,6 +38,7 @@ public class ServiceMapper implements RowMapper<Service>, ResultSetExtractor<Ser
     service.setId(rs.getLong(qSerivce.id));
     service.setName(rs.getString(qSerivce.name));
     service.setDescription(rs.getString(qSerivce.description));
+    service.setRestClient(serviceRestClient);
     return service;
   }
 

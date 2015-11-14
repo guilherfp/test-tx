@@ -25,7 +25,10 @@ public class ServiceRepository {
   private ServiceMapper serviceMapper;
   private JdbcTemplate jdbcTemplate;
 
+  private static final String SELECT_ALL_SQL = "select * from service";
+  private static final String SELECT_SQL = "select * from service where id = ?";
   private static final String INSERT_SQL = "insert into service (name, description) values (?,?)";
+  private static final String UPDATE_SQL = "update service set name = ?, description = ? where id = ?";
 
   @Autowired
   public ServiceRepository(@ServiceData DataSource dataSource) {
@@ -33,13 +36,18 @@ public class ServiceRepository {
   }
 
   public Optional<Service> findById(Long id) {
-    String sql = "select * from service where id = ?";
     ResultSetExtractor<Service> rse = serviceMapper;
-    return Optional.ofNullable(jdbcTemplate.query(sql, new Object[] { id }, rse));
+    return Optional.ofNullable(jdbcTemplate.query(SELECT_SQL, new Object[] { id }, rse));
   }
 
   public void udpate(Service service) {
-
+    jdbcTemplate.update(conn -> {
+      PreparedStatement ps = conn.prepareStatement(UPDATE_SQL);
+      ps.setString(1, service.getName());
+      ps.setString(2, service.getDescription());
+      ps.setLong(3, service.getId());
+      return ps;
+    });
   }
 
   public void save(Service service) {
@@ -58,7 +66,7 @@ public class ServiceRepository {
   }
 
   public List<Service> findAll() {
-    return null;
+    return jdbcTemplate.query(SELECT_ALL_SQL, serviceMapper);
   }
 
 }

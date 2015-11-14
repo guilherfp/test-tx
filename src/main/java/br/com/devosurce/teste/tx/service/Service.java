@@ -1,10 +1,12 @@
 package br.com.devosurce.teste.tx.service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.lang3.Validate;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -19,6 +21,8 @@ public class Service {
   private String name;
   @JsonProperty
   private String description;
+  @JsonIgnore
+  private Optional<ServiceClient> restClient = Optional.empty();
 
   Service() {
     super();
@@ -42,7 +46,9 @@ public class Service {
   }
 
   public void setName(String name) {
+    Validate.notBlank(name);
     this.name = name;
+    restClient.ifPresent(c -> c.updateName(id, name));
   }
 
   public String getDescription() {
@@ -83,6 +89,10 @@ public class Service {
   @Override
   public String toString() {
     return String.format("Service [id: %s, name: %s, description: %s]", id, name, description);
+  }
+
+  public void setRestClient(final ServiceClient restClient) {
+    this.restClient = Optional.of(restClient);
   }
 
 }
