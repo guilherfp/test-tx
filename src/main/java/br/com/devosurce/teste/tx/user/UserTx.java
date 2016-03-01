@@ -7,12 +7,14 @@ import java.lang.annotation.Target;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.devosurce.teste.tx.config.Constants;
+
 /**
  * @author Guilherme Pacheco
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Transactional("user")
+@Transactional(Constants.USER)
 public @interface UserTx {
 
 }

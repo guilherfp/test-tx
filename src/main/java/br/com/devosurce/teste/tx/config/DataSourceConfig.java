@@ -18,38 +18,38 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-  @Bean
-  @UserData
+  @Qualifier(Constants.USER)
+  @Bean(name = Constants.USER)
   public DataSource userDataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
     return builder.setType(EmbeddedDatabaseType.H2).addScripts("schema1.sql").build();
   }
 
-  @Bean
-  @ServiceData
+  @Qualifier(Constants.SERVICE)
+  @Bean(name = Constants.SERVICE)
   public DataSource serviceDataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
     return builder.setType(EmbeddedDatabaseType.H2).addScripts("schema2.sql").build();
   }
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory() {
+  public LocalSessionFactoryBean sessionFactory(@UserData DataSource dataSource) {
     LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
     factory.setMappingResources("hibernate/user.hbm.xml");
-    factory.setDataSource(userDataSource());
+    factory.setDataSource(dataSource);
     return factory;
   }
 
   @Bean
-  @Qualifier("user")
-  public DataSourceTransactionManager userTransaction() {
-    return new DataSourceTransactionManager(userDataSource());
+  @Qualifier(Constants.USER)
+  public DataSourceTransactionManager userTransaction(@UserData DataSource dataSource) {
+    return new DataSourceTransactionManager(dataSource);
   }
 
   @Bean
-  @Qualifier("service")
-  public DataSourceTransactionManager serviceTransaction() {
-    return new DataSourceTransactionManager(serviceDataSource());
+  @Qualifier(Constants.SERVICE)
+  public DataSourceTransactionManager serviceTransaction(@ServiceData DataSource dataSource) {
+    return new DataSourceTransactionManager(dataSource);
   }
 
 }

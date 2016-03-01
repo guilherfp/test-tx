@@ -18,10 +18,4 @@ public class UserRepository extends CrudHibernateRepository<User, Long> {
     super(sessionFactory, "User");
   }
 
-  @UserTx
-  @Override
-  public void delete(User obj) {
-    super.delete(obj);
-  }
-
 }

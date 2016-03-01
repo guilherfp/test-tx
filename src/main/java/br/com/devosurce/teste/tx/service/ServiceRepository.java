@@ -7,12 +7,13 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import br.com.devosurce.teste.tx.config.ServiceData;
+import br.com.devosurce.teste.tx.config.Constants;
 
 /**
  * @author Guilherme Pacheco
@@ -21,7 +22,7 @@ import br.com.devosurce.teste.tx.config.ServiceData;
 public class ServiceRepository {
 
   @Autowired
-  private ServiceMapper serviceMapper;
+  private ServiceMapper mapper;
   private JdbcTemplate jdbcTemplate;
 
   private static final String SELECT_ALL_SQL = "select * from service";
@@ -30,13 +31,13 @@ public class ServiceRepository {
   private static final String UPDATE_SQL = "update service set name = ?, description = ? where id = ?";
 
   @Autowired
-  public ServiceRepository(@ServiceData DataSource dataSource) {
+  public ServiceRepository(@Qualifier(Constants.SERVICE) DataSource dataSource) {
     jdbcTemplate = new JdbcTemplate(dataSource);
   }
 
   public Optional<Service> findById(Long id) {
     Object[] args = new Object[] { id };
-    return Optional.ofNullable(jdbcTemplate.query(SELECT_SQL, args, serviceMapper.resultSet()));
+    return Optional.ofNullable(jdbcTemplate.query(SELECT_SQL, args, mapper.resultSet()));
   }
 
   public void udpate(Service service) {
@@ -65,6 +66,6 @@ public class ServiceRepository {
   }
 
   public List<Service> findAll() {
-    return jdbcTemplate.query(SELECT_ALL_SQL, serviceMapper.mapper());
+    return jdbcTemplate.query(SELECT_ALL_SQL, mapper.mapper());
   }
 }

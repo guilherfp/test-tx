@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+
 import br.com.devosurce.teste.tx.AbstractTest;
 
 /**
@@ -17,6 +19,7 @@ public class ServiceRepositoryTest extends AbstractTest {
   private ServiceRepository serviceRepository;
 
   @Test
+  @Rollback
   public void testFindById() throws Exception {
     Service service = new Service("Service 01");
     serviceRepository.save(service);
@@ -25,6 +28,7 @@ public class ServiceRepositoryTest extends AbstractTest {
   }
 
   @Test
+  @Rollback
   public void testUdpate() throws Exception {
     Service service = new Service("Service 01");
     serviceRepository.save(service);

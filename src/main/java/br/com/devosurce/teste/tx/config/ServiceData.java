@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 /**
  * @author Guilherme Pacheco
  */
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE,
-    ElementType.ANNOTATION_TYPE })
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-@Qualifier
+@Qualifier(Constants.SERVICE)
 public @interface ServiceData {
 
 }
